@@ -11,6 +11,14 @@
 
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <style>
+        .active {
+            background-color: #FF1F3D;
+            color: #FFF;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,19 +31,52 @@
                 </div>
 
                 <div>
-                    <button class="btn btn-active">Sort by view</button>
+                    <button class="btn btn-active text-lg font-medium">Sort by view</button>
                 </div>
 
                 <div>
-                    <button class="btn btn-error text-white">Blog</button>
+                    <a href="blog.html" class="btn btn-error text-white text-lg font-medium">Blog</a>
                 </div>
             </div>
         </nav>
 
         <hr>
 
-
     </header>
+
+
+    <!-- main section -------------- -->
+
+    <main class="container mx-auto">
+
+        <section>
+
+            <!-- Category menu ------- -->
+            <div class="mt-8 mb-10 text-center">
+                <button onclick="allBtn()" id="all-btn"
+                    class="btn btn-goast text-lg font-semibold mr-5 hover:bg-auto">All</button>
+                <button onclick="musicBtn()" id="music-btn"
+                    class="btn btn-goast text-lg font-semibold mr-5 hover:bg-auto">Music</button>
+                <button onclick="comedyBtn()" id="comedy-btn"
+                    class="btn btn-goast text-lg font-semibold mr-5 hover:bg-auto">Comedy</button>
+                <button onclick="drawingBtn()" id="drawing-btn"
+                    class="btn btn-goast text-lg font-semibold mr-5 hover:bg-auto">Drawing</button>
+            </div>
+
+            <!-- Category content  -->
+            <div>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- footer section ------------ -->
+
+    <footer>
+
+    </footer>
 
 
 

@@ -1,5 +1,7 @@
 const cardsContainer = document.getElementById('cards-container');
+const noContainer = document.getElementById('no-content');
 const btnContainer = document.getElementById('btn-container');
+const sortBtn = document.getElementById('sort-btn');
 
 // // All Cetagory btn access ---------
 // const allBtnId = document.getElementById('all-btn');
@@ -9,73 +11,89 @@ const btnContainer = document.getElementById('btn-container');
 
 
 // fetch all videos api ----------------
-
-const categoryId = async(id) =>{
+let dataDetails;
+const categoryId = async (id, isClicked) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`);
     const data = await res.json();
     const info = data.data;
-    // console.log(info)
+    
+    dataDetails = info;
     displayCards(info)
+    
 }
 
 
-const allVideos =async()=>{
+const allVideos = async () => {
     const res = await fetch('https://openapi.programming-hero.com/api/videos/categories');
     const datas = await res.json();
     const data = datas.data;
-    console.log(data);
+    // console.log(data);
     // displayCards(data)
     loadCategories(data)
 }
 
 
+const loadCategories = ( data) => {
+    // console.log(data)
 
-const loadCategories = (data)=>{
-    console.log(data)
-    
     categoryId(1000)
-    data.forEach(d =>{
-        console.log(d.category)
+    data.forEach(d => {
+        // console.log(d.category)
         const btn = document.createElement('button');
         btn.classList = `btn btn-goast text-lg font-semibold mr-5 hover:bg-auto focus:bg-red-600`
         btn.innerText = d.category;
         btnContainer.appendChild(btn)
-        console.log(btn.innerText)
-
-        
 
         console.log()
 
-        btn.addEventListener('click', function(){
+        btn.addEventListener('click', function (event) {
             categoryId(d.category_id);
-
+            const allBtn = document.querySelectorAll(".btn")
+            allBtn.forEach(eachBtn =>{
+                eachBtn.classList.remove('active')
+            })
+            event.target.classList.add('active')
         })
+       
     })
 
 }
 
 
+const displayCards = (data) => {
+    console.log()
 
+    console.log(data)
 
+    if (data.length === 0) {
+        cardsContainer.textContent = ''
+        noContainer.innerHTML = `
+    
+    <div class="flex flex-col items-center my-[150px]">
+    <figure><img class="mb-5 w-[140px] h-[140px] rounded-lg"
+                            src="images/Icon.png" alt="Shoes" />
+                    </figure>
 
+                    <h4 class="font-bold text-4xl">Oops!! Sorry, There is no content here</h4>
 
+    </div>
+    
+    `
+    } else {
 
+        cardsContainer.textContent = ''
+        noContainer.textContent=''
+        data.forEach(d => {
+            // console.log(d)
 
-const displayCards = (data)=>{
+            const { authors, category_id, others, thumbnail, title } = d;
+            // console.log(authors[0]?.verified)
+            // console.log(others.views)
+            
 
+            const div = document.createElement('div');
 
-    cardsContainer.textContent= ''
-    data.forEach(d=>{
-        // console.log(d)
-        console.log(data)
-
-        const {authors, category_id, others, thumbnail, title}= d;
-        // console.log(authors[0]?.verified)
-
-
-        const div = document.createElement('div');
-
-        div.innerHTML=`
+            div.innerHTML = `
         
         <figure><img class="mb-5 h-[200px] w-full rounded-lg"
                 src="${thumbnail}" alt="Shoes" />
@@ -85,7 +103,7 @@ const displayCards = (data)=>{
             <div class="flex items-center mb-2">
                 <img class="w-10 h-10 rounded-full mr-3"
                     src="${authors[0]?.profile_picture
-                    }" alt="">
+                }" alt="">
                 <h3 class="font-bold">
                    ${title}
                 </h3>
@@ -107,11 +125,31 @@ const displayCards = (data)=>{
         </div>
         
         `
-        cardsContainer.appendChild(div)
-    })
-
+            cardsContainer.appendChild(div)
+        })
+    }
 }
 
+const sortBtnFunc=()=>{
+    // console.log(dataDetails)
+    event.target.classList.add('active')
+    dataDetails.sort((items1, items2) =>{
+        // console.log(items1, items2)
+
+        const views1 = Object.values(items1.others.views);
+        const views2 = Object.values(items2.others.views);
+
+
+        // console.log(views1, views2)
+        // console.log(views1.join(""), views2.join(""))
+        return parseFloat(views1.join("")) - parseFloat(views2.join(""));
+        
+        
+    })
+    dataDetails.sort().reverse()
+
+    displayCards(dataDetails)
+}
 
 
 

@@ -43,7 +43,7 @@ const loadCategories = ( data) => {
     data.forEach(d => {
         // console.log(d.category)
         const btn = document.createElement('button');
-        btn.classList = `btn btn-goast text-lg font-semibold mr-5 hover:bg-auto focus:bg-red-600`
+        btn.classList = `btn btn-goast text-lg font-semibold mr-5 hover:bg-auto focus:bg-red-600 mb-3`
         btn.innerText = d.category;
         btnContainer.appendChild(btn)
 
@@ -101,6 +101,7 @@ const displayCards = (data) => {
 
             // 3hrs 56 min ago
             const div = document.createElement('div');
+            div.classList = `border rounded-lg p-3`
 
             div.innerHTML = `
         

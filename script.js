@@ -63,7 +63,7 @@ const loadCategories = ( data) => {
 const displayCards = (data) => {
     console.log()
 
-    console.log(data)
+    console.log(data[0])
 
     if (data.length === 0) {
         cardsContainer.textContent = ''
@@ -88,15 +88,23 @@ const displayCards = (data) => {
 
             const { authors, category_id, others, thumbnail, title } = d;
             // console.log(authors[0]?.verified)
-            // console.log(others.views)
+            // console.log(others.posted_date)
+            const min = Math.floor(others.posted_date % 3600 / 60);
             
+            const hour = Math.floor(others.posted_date / 3600);
+            console.log('Sec:',others.posted_date, 'Min:',min, 'Hour:',hour)
 
+            // 3hrs 56 min ago
             const div = document.createElement('div');
 
             div.innerHTML = `
         
-        <figure><img class="mb-5 h-[200px] w-full rounded-lg"
+        <figure class="relative"><img class="mb-5 h-[200px] w-full rounded-lg "
                 src="${thumbnail}" alt="Shoes" />
+
+                ${others.posted_date ?  `<div class="absolute bottom-3 right-3 inline-block"><p class="text-[10px] text-white p-1 bg-[#171717] rounded">${hour + 'hrs ' + min +'min ago'}</p></div>` : '' }
+
+               
         </figure>
 
         <div class="">

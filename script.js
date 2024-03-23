@@ -2,6 +2,7 @@ const cardsContainer = document.getElementById('cards-container');
 const noContainer = document.getElementById('no-content');
 const btnContainer = document.getElementById('btn-container');
 const sortBtn = document.getElementById('sort-btn');
+const loading = document.getElementById('loading');
 
 // // All Cetagory btn access ---------
 // const allBtnId = document.getElementById('all-btn');
@@ -17,9 +18,10 @@ const categoryId = async (id, isClicked) => {
     const data = await res.json();
     const info = data.data;
     
+    
     dataDetails = info;
     displayCards(info)
-    
+   
 }
 
 
@@ -30,6 +32,7 @@ const allVideos = async () => {
     // console.log(data);
     // displayCards(data)
     loadCategories(data)
+     loadingFunc(true)
 }
 
 
@@ -53,6 +56,8 @@ const loadCategories = ( data) => {
                 eachBtn.classList.remove('active')
             })
             event.target.classList.add('active')
+
+
         })
        
     })
@@ -135,6 +140,8 @@ const displayCards = (data) => {
         `
             cardsContainer.appendChild(div)
         })
+        
+    loadingFunc(false)
     }
 }
 
@@ -155,11 +162,21 @@ const sortBtnFunc=()=>{
         
     })
     dataDetails.sort().reverse()
-
+    loadingFunc(true)
     displayCards(dataDetails)
 }
 
 
+function loadingFunc(isLoading){
+    
+    if(isLoading){
+        loading.classList.remove('hidden')
+    }else{
+
+        loading.classList.add('hidden')
+    }
+    
+}
 
 
 
